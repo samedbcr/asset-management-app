@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppConstants {
-  static final sidebarColor = Color(0xFF39487D);
+  static final sidebarColor = Color(0xFF232E42);
   static final backgroundColor = Color(0xFFECF2FD);
   static final greyColor = Color(0xFF8A8E97);
   static final darkBlueColor = Color(0xFF5373E9);
