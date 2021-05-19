@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Material App',
+      title: 'Asset Management',
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
