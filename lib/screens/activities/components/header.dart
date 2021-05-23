@@ -1,5 +1,6 @@
 import 'package:admin/controllers/MenuController.dart';
 import 'package:admin/responsive.dart';
+import 'package:admin/theme/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -22,7 +23,7 @@ class Header extends StatelessWidget {
           ),
         if (!Responsive.isMobile(context))
           Text(
-            "Dashboard",
+            "All Activities",
             style: Theme.of(context).textTheme.headline6,
           ),
         if (!Responsive.isMobile(context))
@@ -43,7 +44,7 @@ class SearchField extends StatelessWidget {
     return TextField(
       decoration: InputDecoration(
         hintText: "Search",
-        fillColor: secondaryColor,
+        fillColor: AppConstants.sidebarColor,
         filled: true,
         border: OutlineInputBorder(
           borderSide: BorderSide.none,
@@ -54,11 +55,10 @@ class SearchField extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.all(defaultPadding * 0.75),
             margin: EdgeInsets.symmetric(horizontal: defaultPadding / 2),
-            decoration: BoxDecoration(
-              color: primaryColor,
-              borderRadius: const BorderRadius.all(Radius.circular(10)),
+            child: SvgPicture.asset(
+              "assets/icons/Search.svg",
+              color: AppConstants.greenColor,
             ),
-            child: SvgPicture.asset("assets/icons/Search.svg"),
           ),
         ),
       ),

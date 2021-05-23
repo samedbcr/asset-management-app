@@ -32,25 +32,21 @@ class FileInfoCard extends StatelessWidget {
                 height: 40,
                 width: 40,
                 decoration: BoxDecoration(
-                  color: info.color.withOpacity(0.1),
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                 ),
                 child: SvgPicture.asset(
                   info.svgSrc,
-                  color: info.color,
+                  width: 50,
+                  height: 50,
                 ),
               ),
-              Icon(Icons.more_vert, color: Colors.white54)
             ],
           ),
           Text(
             info.title,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-          ),
-          ProgressLine(
-            color: info.color,
-            percentage: info.percentage,
+            style: TextStyle(color: Colors.white),
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -61,13 +57,6 @@ class FileInfoCard extends StatelessWidget {
                     .textTheme
                     .caption
                     .copyWith(color: Colors.white70),
-              ),
-              Text(
-                info.totalStorage,
-                style: Theme.of(context)
-                    .textTheme
-                    .caption
-                    .copyWith(color: Colors.white),
               ),
             ],
           )
@@ -95,7 +84,6 @@ class ProgressLine extends StatelessWidget {
           width: double.infinity,
           height: 5,
           decoration: BoxDecoration(
-            color: color.withOpacity(0.1),
             borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
         ),

@@ -3,11 +3,9 @@ import 'package:flutter/material.dart';
 
 import '../../constants.dart';
 import 'components/header.dart';
-import 'components/my_fiels.dart';
-import 'components/dashboard.dart';
-import 'components/storage_details.dart';
+import 'components/order_requests.dart';
 
-class DashboardScreen extends StatelessWidget {
+class OrderRequestsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -24,12 +22,10 @@ class DashboardScreen extends StatelessWidget {
                   flex: 5,
                   child: Column(
                     children: [
-                      MyFiels(),
                       SizedBox(height: defaultPadding),
-                      Dashboard(),
+                      OrderRequests(),
                       if (Responsive.isMobile(context))
                         SizedBox(height: defaultPadding),
-                      if (Responsive.isMobile(context)) StarageDetails(),
                     ],
                   ),
                 ),
