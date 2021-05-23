@@ -14,47 +14,55 @@ class SideMenu extends StatelessWidget {
         child: Column(
           children: [
             DrawerHeader(
-              child: Image.asset("assets/images/logo.png"),
+              child: Padding(
+                padding: const EdgeInsets.all(32.0),
+                child: Text(
+                  "Cross - Platform",
+                  style: TextStyle(color: Colors.white, fontSize: 18),
+                ),
+              ),
             ),
             DrawerListTile(
               title: "Dashbord",
-              svgSrc: "assets/icons/menu_dashbord.svg",
-              press: () {},
+              svgSrc: "assets/iconsv1/dashboard.svg",
+              press: () {
+                Navigator.pushNamed(context, '/dashboard');
+              },
             ),
             DrawerListTile(
-              title: "Transaction",
-              svgSrc: "assets/icons/menu_tran.svg",
-              press: () {},
+              title: "Assets",
+              svgSrc: "assets/iconsv1/assets.svg",
+              press: () {
+                Navigator.pushNamed(context, '/assets');
+              },
             ),
             DrawerListTile(
-              title: "Task",
-              svgSrc: "assets/icons/menu_task.svg",
-              press: () {},
+              title: "Licenses",
+              svgSrc: "assets/iconsv1/license.svg",
+              press: () {
+                Navigator.pushNamed(context, '/licenses');
+              },
             ),
             DrawerListTile(
-              title: "Documents",
-              svgSrc: "assets/icons/menu_doc.svg",
-              press: () {},
+              title: "Employees",
+              svgSrc: "assets/iconsv1/employee.svg",
+              press: () {
+                Navigator.pushNamed(context, '/employees');
+              },
             ),
             DrawerListTile(
-              title: "Store",
-              svgSrc: "assets/icons/menu_store.svg",
-              press: () {},
+              title: "Order Requests",
+              svgSrc: "assets/iconsv1/orderRequest.svg",
+              press: () {
+                Navigator.pushNamed(context, '/orderRequests');
+              },
             ),
             DrawerListTile(
-              title: "Notification",
-              svgSrc: "assets/icons/menu_notification.svg",
-              press: () {},
-            ),
-            DrawerListTile(
-              title: "Profile",
-              svgSrc: "assets/icons/menu_profile.svg",
-              press: () {},
-            ),
-            DrawerListTile(
-              title: "Settings",
-              svgSrc: "assets/icons/menu_setting.svg",
-              press: () {},
+              title: "All Activities",
+              svgSrc: "assets/iconsv1/activity.svg",
+              press: () {
+                Navigator.pushNamed(context, '/allActivities');
+              },
             ),
           ],
         ),
@@ -82,12 +90,12 @@ class DrawerListTile extends StatelessWidget {
       horizontalTitleGap: 0.0,
       leading: SvgPicture.asset(
         svgSrc,
-        color: Colors.white54,
+        color: Colors.white,
         height: 16,
       ),
       title: Text(
         title,
-        style: TextStyle(color: Colors.white54),
+        style: TextStyle(color: Colors.white),
       ),
     );
   }
