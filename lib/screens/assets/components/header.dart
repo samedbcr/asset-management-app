@@ -6,6 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 import '../../../constants.dart';
+import '../../../theme/constants.dart';
 
 class Header extends StatelessWidget {
   const Header({
@@ -18,6 +19,7 @@ class Header extends StatelessWidget {
       children: [
         if (!Responsive.isDesktop(context))
           IconButton(
+            color: AppConstants.sidebarColor,
             icon: Icon(Icons.menu),
             onPressed: context.read<MenuController>().controlMenu,
           ),
