@@ -6,6 +6,7 @@ import 'package:admin/screens/main/assets.dart';
 import 'package:admin/screens/main/dashboard.dart';
 import 'package:admin/screens/main/order_requests.dart';
 import 'package:admin/theme/constants.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +14,9 @@ import 'package:provider/provider.dart';
 import 'screens/main/all_activities.dart';
 import 'screens/main/all_employees.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
