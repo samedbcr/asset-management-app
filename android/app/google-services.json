@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "695150628940",
+    "project_id": "asset-mng-app",
+    "storage_bucket": "asset-mng-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:695150628940:android:15341fa2922d897766e4e9",
+        "android_client_info": {
+          "package_name": "com.example.admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "695150628940-msjlgpptm0fblfltvb75rkhgq7f115tf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCy6kQR2pEIEGvUy52_OcfTh-Wv6_JmOgE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "695150628940-msjlgpptm0fblfltvb75rkhgq7f115tf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "695150628940-2juplr82mqeiqqq1pkj65ccobtk6je3l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.crossplatform.assetmanagement"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
