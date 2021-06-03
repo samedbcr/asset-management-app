@@ -3,10 +3,20 @@ import 'package:admin/responsive.dart';
 import 'package:admin/screens/licenses/licenses_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import "package:admin/login/auth.dart";
 import 'components/side_menu.dart';
 
-class Licenses extends StatelessWidget {
+class Licenses extends StatefulWidget {
+  const Licenses({Key key, this.auth, this.onSignedOut, this.userId})
+      : super(key: key);
+  final BaseAuth auth;
+  final VoidCallback onSignedOut;
+  final String userId;
+  @override
+  State<Licenses> createState() => _LicensesState();
+}
+
+class _LicensesState extends State<Licenses> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

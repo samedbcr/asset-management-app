@@ -1,10 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import "package:admin/login/auth.dart";
+import "package:admin/login/root_page.dart";
 
-class SideMenu extends StatelessWidget {
-  const SideMenu({
-    Key key,
-  }) : super(key: key);
+class SideMenu extends StatefulWidget {
+  const SideMenu({Key key, this.auth, this.onSignedOut, this.userId})
+      : super(key: key);
+  final BaseAuth auth;
+  final VoidCallback onSignedOut;
+  final String userId;
+
+  @override
+  State<SideMenu> createState() => _SideMenuState();
+}
+
+class _SideMenuState extends State<SideMenu> {
+  void _signOut() async {
+    try {
+      widget.onSignedOut();
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +40,7 @@ class SideMenu extends StatelessWidget {
               ),
             ),
             DrawerListTile(
-              title: "Dashbord",
+              title: "Dashboard",
               svgSrc: "assets/iconsv1/dashboard.svg",
               press: () {
                 Navigator.pushNamed(context, '/dashboard');
@@ -62,6 +79,13 @@ class SideMenu extends StatelessWidget {
               svgSrc: "assets/iconsv1/activity.svg",
               press: () {
                 Navigator.pushNamed(context, '/allActivities');
+              },
+            ),
+            DrawerListTile(
+              title: "Logout",
+              svgSrc: "assets/iconsv1/dashboard.svg",
+              press: () {
+                _signOut();
               },
             ),
           ],
