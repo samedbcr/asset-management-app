@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import "package:admin/login/auth.dart";
-import "package:admin/login/root_page.dart";
 
 class SideMenu extends StatefulWidget {
   const SideMenu({Key key, this.auth, this.onSignedOut, this.userId})

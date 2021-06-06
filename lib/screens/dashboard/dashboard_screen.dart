@@ -5,7 +5,6 @@ import '../../constants.dart';
 import 'components/header.dart';
 import 'components/my_fiels.dart';
 import 'components/dashboard.dart';
-import 'components/storage_details.dart';
 
 class DashboardScreen extends StatelessWidget {
   @override
