@@ -1,11 +1,14 @@
 import 'package:admin/theme/constants.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
+import 'package:admin/controllers/EmployeesController.dart';
 import '../../../constants.dart';
 import '../../../responsive.dart';
 
 class Employees extends StatelessWidget {
-  const Employees({
+  final EmployeesController _controller = EmployeesController();
+
+  Employees({
     Key key,
   }) : super(key: key);
 
@@ -26,55 +29,116 @@ class Employees extends StatelessWidget {
               scrollDirection: (Responsive.isMobile(context))
                   ? Axis.horizontal
                   : Axis.vertical,
-              child: DataTable(
-                horizontalMargin: 0,
-                columnSpacing: defaultPadding,
-                columns: [
-                  DataColumn(
-                    label: Text(
-                      "UserID",
-                      style: TextStyle(color: AppConstants.darkBlueColor),
-                    ),
-                  ),
-                  DataColumn(
-                    label: Text(
-                      "Username",
-                      style: TextStyle(color: AppConstants.darkBlueColor),
-                    ),
-                  ),
-                  DataColumn(
-                    label: Text(
-                      "Job Type",
-                      style: TextStyle(color: AppConstants.darkBlueColor),
-                    ),
-                  ),
-                  DataColumn(
-                    label: Text(
-                      "Start Date",
-                      style: TextStyle(color: AppConstants.darkBlueColor),
-                    ),
-                  ),
-                ],
-                rows: List.generate(
-                  10,
-                  (index) => recentFileDataRow(),
-                ),
-              ),
+              child: _callAssetsStream(),
             ),
           ),
         ],
       ),
     );
   }
-}
 
-DataRow recentFileDataRow() {
-  return DataRow(
-    cells: [
-      DataCell(Text("123123123")),
-      DataCell(Text("ddogukanaydin")),
-      DataCell(Text("Software Developer")),
-      DataCell(Text("06/05/2021")),
-    ],
-  );
+  Widget _callAssetsStream() {
+    return StreamBuilder(
+      stream: _controller.getEmployees(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return Text('Waiting');
+            break;
+          case ConnectionState.active:
+          case ConnectionState.done:
+            if (snapshot.hasData) {
+              return buildDataTable(snapshot.data.docs);
+            } else {
+              return Text("employees is Empty!");
+            }
+            break;
+          default:
+            return Text('Active');
+        }
+      },
+    );
+  }
+
+  DataTable buildDataTable(List<QueryDocumentSnapshot> employees) {
+    return DataTable(
+      horizontalMargin: 0,
+      columnSpacing: defaultPadding,
+      dataRowHeight: 100,
+      columns: [
+        DataColumn(
+          label: Text(
+            "UserID",
+            style: TextStyle(color: AppConstants.darkBlueColor),
+          ),
+        ),
+        DataColumn(
+          label: Text(
+            "Username",
+            style: TextStyle(color: AppConstants.darkBlueColor),
+          ),
+        ),
+        DataColumn(
+          label: Text(
+            "Job Type",
+            style: TextStyle(color: AppConstants.darkBlueColor),
+          ),
+        ),
+        DataColumn(
+          label: Text(
+            "Start Date",
+            style: TextStyle(color: AppConstants.darkBlueColor),
+          ),
+        ),
+      ],
+      rows: recentFileDataRow(employees),
+    );
+  }
+
+  List<DataRow> recentFileDataRow(List<QueryDocumentSnapshot> employees) {
+    return List.generate(
+      employees.length,
+      (index) => DataRow(
+        cells: [
+          DataCell(
+            Text(employees[index].id),
+          ),
+          DataCell(
+            ListTile(
+              title: Text(
+                employees[index]["username"],
+              ),
+              subtitle: Text(
+                employees[index]["job_type"],
+                style: TextStyle(color: AppConstants.greenColor),
+              ),
+            ),
+          ),
+          DataCell(
+            Text(
+              employees[index]["start_date"].toString(),
+            ),
+          ),
+          DataCell(
+            Row(
+              children: [
+                IconButton(
+                    icon: Icon(
+                      Icons.edit,
+                      color: AppConstants.greenColor,
+                    ),
+                    onPressed: () {}),
+                IconButton(
+                    icon: Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                    ),
+                    onPressed: () {}),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

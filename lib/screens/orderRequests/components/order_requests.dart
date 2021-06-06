@@ -1,11 +1,14 @@
 import 'package:admin/theme/constants.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
+import 'package:admin/controllers/OrderRequestsController.dart';
 import '../../../constants.dart';
 import '../../../responsive.dart';
 
 class OrderRequests extends StatelessWidget {
-  const OrderRequests({
+  final OrderRequestsController _controller = OrderRequestsController();
+
+  OrderRequests({
     Key key,
   }) : super(key: key);
 
@@ -26,79 +29,123 @@ class OrderRequests extends StatelessWidget {
               scrollDirection: (Responsive.isMobile(context))
                   ? Axis.horizontal
                   : Axis.vertical,
-              child: DataTable(
-                horizontalMargin: 0,
-                columnSpacing: defaultPadding,
-                columns: [
-                  DataColumn(
-                    label: Text(
-                      "UserID",
-                      style: TextStyle(color: AppConstants.darkBlueColor),
-                    ),
-                  ),
-                  DataColumn(
-                    label: Text(
-                      "Username",
-                      style: TextStyle(color: AppConstants.darkBlueColor),
-                    ),
-                  ),
-                  DataColumn(
-                    label: Text(
-                      "Product Name",
-                      style: TextStyle(color: AppConstants.darkBlueColor),
-                    ),
-                  ),
-                  DataColumn(
-                    label: Text(
-                      "Date",
-                      style: TextStyle(color: AppConstants.darkBlueColor),
-                    ),
-                  ),
-                  DataColumn(
-                    label: Text(
-                      "Action",
-                      style: TextStyle(color: AppConstants.darkBlueColor),
-                    ),
-                  ),
-                ],
-                rows: List.generate(
-                  10,
-                  (index) => recentFileDataRow(),
-                ),
-              ),
+              child: _callOrderRequestsStream(),
             ),
           ),
         ],
       ),
     );
   }
-}
 
-DataRow recentFileDataRow() {
-  return DataRow(
-    cells: [
-      DataCell(Text("123123123")),
-      DataCell(Text("ddogukanaydin")),
-      DataCell(Text("Macbook Pro")),
-      DataCell(Text("06/05/2021")),
-      DataCell(
-        Row(
-          children: [
-            IconButton(
-                icon: Icon(
-                  Icons.check_box,
-                  color: AppConstants.greenColor,
-                ),
-                onPressed: () {}),
-            IconButton(
-                icon: Icon(
-                  Icons.cancel_outlined,
-                  color: Colors.red,
-                ),
-                onPressed: () {}),
-          ],
+  Widget _callOrderRequestsStream() {
+    return StreamBuilder(
+      stream: _controller.getOrderRequets(),
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.waiting:
+            return Text('Waiting');
+            break;
+          case ConnectionState.active:
+          case ConnectionState.done:
+            if (snapshot.hasData) {
+              return buildDataTable(snapshot.data.docs);
+            } else {
+              return Text("Assets is Empty!");
+            }
+            break;
+          default:
+            return Text('Active');
+        }
+      },
+    );
+  }
+
+  DataTable buildDataTable(List<QueryDocumentSnapshot> assets) {
+    return DataTable(
+      horizontalMargin: 0,
+      columnSpacing: defaultPadding,
+      dataRowHeight: 100,
+      columns: [
+        DataColumn(
+          label: Text(
+            "UserID",
+            style: TextStyle(color: AppConstants.darkBlueColor),
+          ),
         ),
+        DataColumn(
+          label: Text(
+            "Username",
+            style: TextStyle(color: AppConstants.darkBlueColor),
+          ),
+        ),
+        DataColumn(
+          label: Text(
+            "Product Name",
+            style: TextStyle(color: AppConstants.darkBlueColor),
+          ),
+        ),
+        DataColumn(
+          label: Text(
+            "Date",
+            style: TextStyle(color: AppConstants.darkBlueColor),
+          ),
+        ),
+        DataColumn(
+          label: Text(
+            "Action",
+            style: TextStyle(color: AppConstants.darkBlueColor),
+          ),
+        ),
+      ],
+      rows: recentFileDataRow(assets),
+    );
+  }
+
+  List<DataRow> recentFileDataRow(List<QueryDocumentSnapshot> assets) {
+    return List.generate(
+      assets.length,
+      (index) => DataRow(
+        cells: [
+          DataCell(
+            Text(assets[index].id),
+          ),
+          DataCell(
+            ListTile(
+              title: Text(
+                assets[index]["user_name"],
+              ),
+            ),
+          ),
+          DataCell(
+            Text(
+              assets[index]["product_name"].toString(),
+            ),
+          ),
+          DataCell(
+            Text(
+              (assets[index]["updated_at"]).toString(),
+            ),
+          ),
+          DataCell(
+            Row(
+              children: [
+                IconButton(
+                    icon: Icon(
+                      Icons.edit,
+                      color: AppConstants.greenColor,
+                    ),
+                    onPressed: () {}),
+                IconButton(
+                    icon: Icon(
+                      Icons.delete,
+                      color: Colors.red,
+                    ),
+                    onPressed: () {}),
+              ],
+            ),
+          ),
+        ],
       ),
-    ],
-  );
+    );
+  }
 }
