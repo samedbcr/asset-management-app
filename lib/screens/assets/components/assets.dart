@@ -137,16 +137,12 @@ class Assets extends StatelessWidget {
               children: [
                 IconButton(
                     icon: Icon(
-                      Icons.edit,
-                      color: AppConstants.greenColor,
-                    ),
-                    onPressed: () {}),
-                IconButton(
-                    icon: Icon(
                       Icons.delete,
                       color: Colors.red,
                     ),
-                    onPressed: () {}),
+                    onPressed: () {
+                      _controller.deleteUser(assets[index].reference);
+                    }),
               ],
             ),
           ),
