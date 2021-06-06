@@ -1,8 +1,12 @@
+import 'package:admin/theme/constants.dart';
 import 'package:flutter/material.dart';
 // import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 //import 'package:personal_tool_bag/auth.dart';
+import 'package:admin/theme/constants.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import "auth.dart";
 
 class LoginPage extends StatefulWidget {
@@ -21,6 +25,8 @@ class LoginPage extends StatefulWidget {
 enum FormType { login, register }
 
 class _LoginPageState extends State<LoginPage> {
+  bool _isObscure = true;
+
   final formKey = new GlobalKey<FormState>();
   String _email;
   String _password;
@@ -68,71 +74,109 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text("Login Page"),
-      ),
-      body: new Container(
-        padding: EdgeInsets.all(16.0),
-        child: new Form(
-            key: formKey,
-            child: new Column(children: _buildInputs() + _buildButtons())),
+    return Scaffold(
+      body: SafeArea(
+        child: Stack(
+          children: [
+            Container(
+              color: AppConstants.sidebarColor,
+            ),
+            SingleChildScrollView(
+              child: Align(
+                child: Container(
+                  margin: EdgeInsets.symmetric(vertical: 50),
+                  alignment: Alignment.center,
+                  width: 375,
+                  height: 812,
+                  color: AppConstants.backgroundColor,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 50),
+                        child: Text(
+                          "LOGIN",
+                          style: CustomTextHeadline.headLine3,
+                        ),
+                      ),
+                      SvgPicture.asset("assets/iconsv1/login.svg"),
+                      Form(
+                        key: formKey,
+                        child: Column(
+                          children: [
+                            Container(
+                              margin: const EdgeInsets.all(16.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16.0),
+                              color: AppConstants.sidebarColor,
+                              child: TextFormField(
+                                keyboardType: TextInputType.emailAddress,
+                                decoration:
+                                    new InputDecoration(labelText: "Email"),
+                                validator: (value) => value.isEmpty
+                                    ? "E-mail cant be empty"
+                                    : null,
+                                onSaved: (value) => _email = value.toString(),
+                              ),
+                            ),
+                            Container(
+                              margin: const EdgeInsets.all(16.0),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16.0),
+                              color: AppConstants.sidebarColor,
+                              child: TextFormField(
+                                obscureText: _isObscure,
+                                decoration: InputDecoration(
+                                  labelText: "Password",
+                                  suffixIcon: IconButton(
+                                    icon: Icon(_isObscure
+                                        ? Icons.visibility
+                                        : Icons.visibility_off),
+                                    onPressed: () {
+                                      setState(() {
+                                        _isObscure = !_isObscure;
+                                      });
+                                    },
+                                  ),
+                                ),
+                                validator: (value) => value.isEmpty
+                                    ? "Password cant be empty"
+                                    : null,
+                                onSaved: (value) =>
+                                    _password = value.toString(),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Container(
+                        margin: EdgeInsets.only(top: 20),
+                        width: 350,
+                        height: 60,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  primary: AppConstants.sidebarColor),
+                              child: Text(
+                                "LOGIN",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20),
+                              ),
+                              onPressed: validateAndSubmit,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
-  }
-
-  List<Widget> _buildInputs() {
-    return [
-      new TextFormField(
-        keyboardType: TextInputType.emailAddress,
-        decoration: new InputDecoration(labelText: "Email"),
-        validator: (value) => value.isEmpty ? "E-mail cant be empty" : null,
-        onSaved: (value) => _email = value.toString(),
-      ),
-      new TextFormField(
-        decoration: new InputDecoration(labelText: "Password"),
-        validator: (value) => value.isEmpty ? "Password cant be empty" : null,
-        onSaved: (value) => _password = value.toString(),
-        obscureText: true,
-      )
-    ];
-  }
-
-  List<Widget> _buildButtons() {
-    if (_formType == FormType.login) {
-      return [
-        new RaisedButton(
-          onPressed: validateAndSubmit,
-          child: new Text(
-            "Login",
-            style: new TextStyle(fontSize: 20.0),
-          ),
-        ),
-        new FlatButton(
-          onPressed: moveToRegister,
-          child: new Text(
-            "create Account",
-            style: new TextStyle(fontSize: 20),
-          ),
-        )
-      ];
-    } else {
-      return [
-        new RaisedButton(
-          onPressed: validateAndSubmit,
-          child: new Text(
-            "Create an Account",
-            style: new TextStyle(fontSize: 20.0),
-          ),
-        ),
-        new FlatButton(
-          onPressed: moveToLogin,
-          child: new Text(
-            "Have an Account? Login",
-            style: new TextStyle(fontSize: 20),
-          ),
-        )
-      ];
-    }
   }
 }
