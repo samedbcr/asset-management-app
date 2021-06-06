@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:admin/controllers/OrderRequestsController.dart';
 import '../../../constants.dart';
 import '../../../responsive.dart';
+import 'package:intl/intl.dart';
 
 class OrderRequests extends StatelessWidget {
   final OrderRequestsController _controller = OrderRequestsController();
@@ -122,19 +123,14 @@ class OrderRequests extends StatelessWidget {
             ),
           ),
           DataCell(
-            Text(
-              (assets[index]["updated_at"]).toString(),
-            ),
+            Text(DateFormat.yMMMd()
+                .format(DateTime.parse(
+                    assets[index]["updated_at"].toDate().toString()))
+                .toString()),
           ),
           DataCell(
             Row(
               children: [
-                IconButton(
-                    icon: Icon(
-                      Icons.edit,
-                      color: AppConstants.greenColor,
-                    ),
-                    onPressed: () {}),
                 IconButton(
                     icon: Icon(
                       Icons.delete,

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:admin/controllers/EmployeesController.dart';
 import '../../../constants.dart';
 import '../../../responsive.dart';
+import 'package:intl/intl.dart';
 
 class Employees extends StatelessWidget {
   final EmployeesController _controller = EmployeesController();
@@ -104,38 +105,16 @@ class Employees extends StatelessWidget {
             Text(employees[index].id),
           ),
           DataCell(
-            ListTile(
-              title: Text(
-                employees[index]["username"],
-              ),
-              subtitle: Text(
-                employees[index]["job_type"],
-                style: TextStyle(color: AppConstants.greenColor),
-              ),
-            ),
+            Text(employees[index]["username"]),
           ),
           DataCell(
-            Text(
-              employees[index]["start_date"].toString(),
-            ),
+            Text(employees[index]["job_type"]),
           ),
           DataCell(
-            Row(
-              children: [
-                IconButton(
-                    icon: Icon(
-                      Icons.edit,
-                      color: AppConstants.greenColor,
-                    ),
-                    onPressed: () {}),
-                IconButton(
-                    icon: Icon(
-                      Icons.delete,
-                      color: Colors.red,
-                    ),
-                    onPressed: () {}),
-              ],
-            ),
+            Text(DateFormat.yMMMd()
+                .format(DateTime.parse(
+                    employees[index]["start_date"].toDate().toString()))
+                .toString()),
           ),
         ],
       ),

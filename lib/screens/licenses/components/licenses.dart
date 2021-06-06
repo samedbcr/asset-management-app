@@ -104,37 +104,14 @@ class Licenses extends StatelessWidget {
             Text(licenses[index].id),
           ),
           DataCell(
-            ListTile(
-              title: Text(
-                licenses[index]["name"],
-              ),
-              subtitle: Text(
-                licenses[index]["category"],
-                style: TextStyle(color: AppConstants.greenColor),
-              ),
-            ),
+            Text(licenses[index]["name"]),
+          ),
+          DataCell(
+            Text(licenses[index]["category"]),
           ),
           DataCell(
             Text(
               licenses[index]["users"].toString(),
-            ),
-          ),
-          DataCell(
-            Row(
-              children: [
-                IconButton(
-                    icon: Icon(
-                      Icons.edit,
-                      color: AppConstants.greenColor,
-                    ),
-                    onPressed: () {}),
-                IconButton(
-                    icon: Icon(
-                      Icons.delete,
-                      color: Colors.red,
-                    ),
-                    onPressed: () {}),
-              ],
             ),
           ),
         ],
