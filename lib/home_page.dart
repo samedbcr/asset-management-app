@@ -46,9 +46,8 @@ class _MyHomePageState extends State<MyHomePage> {
             .apply(bodyColor: Colors.black),
         canvasColor: AppConstants.sidebarColor,
       ),
-      initialRoute: '/assets',
+      initialRoute: '/dashboard',
       routes: {
-        '/': (context) => Login(),
         '/dashboard': (context) => MultiProvider(
               providers: [
                 ChangeNotifierProvider(
