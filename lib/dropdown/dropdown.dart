@@ -251,7 +251,7 @@ class _CustomDialogState extends State<CustomDialog> {
         color: Colors.blueGrey,
       ),
       label: Text(
-        'OK!',
+        'ADD',
         style: Theme.of(context)
             .textTheme
             .button

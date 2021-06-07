@@ -67,7 +67,6 @@ class MyFiels extends StatelessWidget {
         return CustomDialog();
       },
     );
-    Navigator.pop(context);
     return data;
   }
 }
