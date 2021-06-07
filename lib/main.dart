@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: '',
+      title: 'Asset Management',
       theme: ThemeData.dark(),
       home: new RootPage(auth: new Auth()),
     );

@@ -1,5 +1,7 @@
+import 'package:admin/dropdown/dropdown.dart';
 import 'package:admin/models/MyFiles.dart';
 import 'package:admin/responsive.dart';
+import 'package:admin/theme/constants.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
@@ -24,15 +26,21 @@ class MyFiels extends StatelessWidget {
             ),
             ElevatedButton.icon(
               style: TextButton.styleFrom(
+                backgroundColor: AppConstants.greenColor,
                 padding: EdgeInsets.symmetric(
                   horizontal: defaultPadding * 1.5,
                   vertical:
                       defaultPadding / (Responsive.isMobile(context) ? 2 : 1),
                 ),
               ),
-              onPressed: () {},
-              icon: Icon(Icons.add),
-              label: Text("Add New"),
+              onPressed: () {
+                _showDialog(context);
+              },
+              icon: Icon(Icons.add, color: AppConstants.backgroundColor),
+              label: Text(
+                "Add New",
+                style: TextStyle(color: AppConstants.backgroundColor),
+              ),
             ),
           ],
         ),
@@ -49,6 +57,18 @@ class MyFiels extends StatelessWidget {
         ),
       ],
     );
+  }
+
+  Future _showDialog(BuildContext context) async {
+    var data = await showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return CustomDialog();
+      },
+    );
+    Navigator.pop(context);
+    return data;
   }
 }
 
