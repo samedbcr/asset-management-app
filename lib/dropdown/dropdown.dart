@@ -1,5 +1,10 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:admin/theme/constants.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
+import 'package:date_time_picker/date_time_picker.dart';
 
 class CustomDialog extends StatefulWidget {
   const CustomDialog({Key key}) : super(key: key);
@@ -9,6 +14,8 @@ class CustomDialog extends StatefulWidget {
 }
 
 class _CustomDialogState extends State<CustomDialog> {
+  final firestoreInstance = FirebaseFirestore.instance;
+
   String _chosenValue;
 
   @override
@@ -74,21 +81,12 @@ class _CustomDialogState extends State<CustomDialog> {
   }
 
   Column employeeForm(BuildContext context) {
+    String job_type = '';
+    String username = '';
+    Timestamp date = Timestamp.fromMicrosecondsSinceEpoch(
+        DateTime.now().microsecondsSinceEpoch);
     return Column(
       children: [
-        Text(
-          "UserID",
-          style: TextStyle(color: AppConstants.backgroundColor),
-        ),
-        TextFormField(
-          style: TextStyle(color: AppConstants.greenColor),
-          onChanged: (text) {
-            print('1 text field: $text');
-          },
-        ),
-        SizedBox(
-          height: 10,
-        ),
         Text(
           "Username",
           style: TextStyle(color: AppConstants.backgroundColor),
@@ -96,7 +94,7 @@ class _CustomDialogState extends State<CustomDialog> {
         TextFormField(
           style: TextStyle(color: AppConstants.greenColor),
           onChanged: (text) {
-            print('2 text field: $text');
+            username = text;
           },
         ),
         SizedBox(
@@ -109,7 +107,7 @@ class _CustomDialogState extends State<CustomDialog> {
         TextFormField(
           style: TextStyle(color: AppConstants.greenColor),
           onChanged: (text) {
-            print('3 text field: $text');
+            job_type = text;
           },
         ),
         SizedBox(
@@ -119,36 +117,78 @@ class _CustomDialogState extends State<CustomDialog> {
           "Start Date",
           style: TextStyle(color: AppConstants.backgroundColor),
         ),
-        TextFormField(
-          style: TextStyle(color: AppConstants.greenColor),
-          onChanged: (text) {
-            print('4 text field: $text');
+        DateTimePicker(
+          type: DateTimePickerType.dateTimeSeparate,
+          dateMask: 'd MMM, yyyy',
+          initialValue: DateTime.now().toString(),
+          firstDate: DateTime(2000),
+          lastDate: DateTime(2100),
+          icon: Icon(Icons.event),
+          dateLabelText: 'Date',
+          timeLabelText: "Hour",
+          selectableDayPredicate: (date) {
+            // Disable weekend days to select from the calendar
+            if (date.weekday == 6 || date.weekday == 7) {
+              return false;
+            }
+
+            return true;
+          },
+          onChanged: (val) {
+            DateTime currentPhoneDate = DateTime.now(); //DateTime
+            Timestamp myTimeStamp = Timestamp.fromDate(currentPhoneDate);
+            date = Timestamp.fromMicrosecondsSinceEpoch(
+                currentPhoneDate.microsecondsSinceEpoch);
+            print(date);
+          },
+          validator: (val) {
+            print(val);
+            return null;
           },
         ),
         SizedBox(
           height: 20,
         ),
-        buildOkButton(context),
+        ElevatedButton.icon(
+          onPressed: () {
+            var rng = new Random();
+            var randomNumber = rng.nextInt(1000000);
+            String valueStr = randomNumber.toString();
+            firestoreInstance.collection("employees").doc(valueStr).set({
+              "job_type": job_type,
+              "start_date": date,
+              "username": username,
+            }).then((_) {
+              print("başarılı");
+            });
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.done_rounded,
+            color: Colors.blueGrey,
+          ),
+          label: Text(
+            'ADD',
+            style: Theme.of(context)
+                .textTheme
+                .button
+                .copyWith(color: AppConstants.sidebarColor),
+          ),
+          style: ElevatedButton.styleFrom(
+            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 30),
+            primary: AppConstants.backgroundColor,
+          ),
+        ),
       ],
     );
   }
 
   Column licensesForm(BuildContext context) {
+    String software = '';
+    String category = '';
+    String users = '';
     return Column(
       children: [
-        Text(
-          "LicenseID",
-          style: TextStyle(color: AppConstants.backgroundColor),
-        ),
-        TextFormField(
-          style: TextStyle(color: AppConstants.greenColor),
-          onChanged: (text) {
-            print('1 text field: $text');
-          },
-        ),
-        SizedBox(
-          height: 10,
-        ),
         Text(
           "Software",
           style: TextStyle(color: AppConstants.backgroundColor),
@@ -156,7 +196,7 @@ class _CustomDialogState extends State<CustomDialog> {
         TextFormField(
           style: TextStyle(color: AppConstants.greenColor),
           onChanged: (text) {
-            print('2 text field: $text');
+            software = text;
           },
         ),
         SizedBox(
@@ -169,7 +209,7 @@ class _CustomDialogState extends State<CustomDialog> {
         TextFormField(
           style: TextStyle(color: AppConstants.greenColor),
           onChanged: (text) {
-            print('3 text field: $text');
+            category = text;
           },
         ),
         SizedBox(
@@ -182,33 +222,53 @@ class _CustomDialogState extends State<CustomDialog> {
         TextFormField(
           style: TextStyle(color: AppConstants.greenColor),
           onChanged: (text) {
-            print('4 text field: $text');
+            users = text;
           },
         ),
         SizedBox(
           height: 20,
         ),
-        buildOkButton(context),
+        ElevatedButton.icon(
+          onPressed: () {
+            var rng = new Random();
+            var randomNumber = rng.nextInt(1000000);
+            String valueStr = randomNumber.toString();
+            firestoreInstance.collection("licenses").doc(valueStr).set({
+              "name": software,
+              "category": category,
+              "users": users,
+            }).then((_) {
+              print("başarılı");
+            });
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.done_rounded,
+            color: Colors.blueGrey,
+          ),
+          label: Text(
+            'ADD',
+            style: Theme.of(context)
+                .textTheme
+                .button
+                .copyWith(color: AppConstants.sidebarColor),
+          ),
+          style: ElevatedButton.styleFrom(
+            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 30),
+            primary: AppConstants.backgroundColor,
+          ),
+        ),
       ],
     );
   }
 
   Column assetsForm(BuildContext context) {
+    String asset_name = '';
+    String description = '';
+    String product_type = '';
+    String quantity = '';
     return Column(
       children: [
-        Text(
-          "AssetID",
-          style: TextStyle(color: AppConstants.backgroundColor),
-        ),
-        TextFormField(
-          style: TextStyle(color: AppConstants.greenColor),
-          onChanged: (text) {
-            print('1 text field: $text');
-          },
-        ),
-        SizedBox(
-          height: 10,
-        ),
         Text(
           "Asset Name",
           style: TextStyle(color: AppConstants.backgroundColor),
@@ -216,7 +276,20 @@ class _CustomDialogState extends State<CustomDialog> {
         TextFormField(
           style: TextStyle(color: AppConstants.greenColor),
           onChanged: (text) {
-            print('2 text field: $text');
+            asset_name = text;
+          },
+        ),
+        SizedBox(
+          height: 10,
+        ),
+        Text(
+          "Asset Description",
+          style: TextStyle(color: AppConstants.backgroundColor),
+        ),
+        TextFormField(
+          style: TextStyle(color: AppConstants.greenColor),
+          onChanged: (text) {
+            description = text;
           },
         ),
         SizedBox(
@@ -229,7 +302,7 @@ class _CustomDialogState extends State<CustomDialog> {
         TextFormField(
           style: TextStyle(color: AppConstants.greenColor),
           onChanged: (text) {
-            print('3 text field: $text');
+            product_type = text;
           },
         ),
         SizedBox(
@@ -242,13 +315,44 @@ class _CustomDialogState extends State<CustomDialog> {
         TextFormField(
           style: TextStyle(color: AppConstants.greenColor),
           onChanged: (text) {
-            print('4 text field: $text');
+            quantity = text;
           },
         ),
         SizedBox(
           height: 20,
         ),
-        buildOkButton(context),
+        ElevatedButton.icon(
+          onPressed: () {
+            var rng = new Random();
+            var randomNumber = rng.nextInt(1000000);
+            String valueStr = randomNumber.toString();
+            firestoreInstance.collection("assets").doc(valueStr).set({
+              "name": asset_name,
+              "description": description,
+              "type": product_type,
+              "quantity": quantity,
+              "is_deleted": false,
+            }).then((_) {
+              print("başarılı");
+            });
+            Navigator.pop(context);
+          },
+          icon: Icon(
+            Icons.done_rounded,
+            color: Colors.blueGrey,
+          ),
+          label: Text(
+            'ADD',
+            style: Theme.of(context)
+                .textTheme
+                .button
+                .copyWith(color: AppConstants.sidebarColor),
+          ),
+          style: ElevatedButton.styleFrom(
+            padding: EdgeInsets.symmetric(vertical: 8, horizontal: 30),
+            primary: AppConstants.backgroundColor,
+          ),
+        ),
       ],
     );
   }
