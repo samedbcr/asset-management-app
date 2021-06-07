@@ -44,6 +44,7 @@ class SearchField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      style: TextStyle(color: AppConstants.greenColor),
       decoration: InputDecoration(
         hintText: "Search",
         fillColor: AppConstants.sidebarColor,

@@ -81,6 +81,7 @@ class _CustomDialogState extends State<CustomDialog> {
           style: TextStyle(color: AppConstants.backgroundColor),
         ),
         TextFormField(
+          style: TextStyle(color: AppConstants.greenColor),
           onChanged: (text) {
             print('1 text field: $text');
           },
@@ -93,6 +94,7 @@ class _CustomDialogState extends State<CustomDialog> {
           style: TextStyle(color: AppConstants.backgroundColor),
         ),
         TextFormField(
+          style: TextStyle(color: AppConstants.greenColor),
           onChanged: (text) {
             print('2 text field: $text');
           },
@@ -105,6 +107,7 @@ class _CustomDialogState extends State<CustomDialog> {
           style: TextStyle(color: AppConstants.backgroundColor),
         ),
         TextFormField(
+          style: TextStyle(color: AppConstants.greenColor),
           onChanged: (text) {
             print('3 text field: $text');
           },
@@ -117,6 +120,7 @@ class _CustomDialogState extends State<CustomDialog> {
           style: TextStyle(color: AppConstants.backgroundColor),
         ),
         TextFormField(
+          style: TextStyle(color: AppConstants.greenColor),
           onChanged: (text) {
             print('4 text field: $text');
           },
@@ -137,6 +141,7 @@ class _CustomDialogState extends State<CustomDialog> {
           style: TextStyle(color: AppConstants.backgroundColor),
         ),
         TextFormField(
+          style: TextStyle(color: AppConstants.greenColor),
           onChanged: (text) {
             print('1 text field: $text');
           },
@@ -149,6 +154,7 @@ class _CustomDialogState extends State<CustomDialog> {
           style: TextStyle(color: AppConstants.backgroundColor),
         ),
         TextFormField(
+          style: TextStyle(color: AppConstants.greenColor),
           onChanged: (text) {
             print('2 text field: $text');
           },
@@ -161,6 +167,7 @@ class _CustomDialogState extends State<CustomDialog> {
           style: TextStyle(color: AppConstants.backgroundColor),
         ),
         TextFormField(
+          style: TextStyle(color: AppConstants.greenColor),
           onChanged: (text) {
             print('3 text field: $text');
           },
@@ -173,6 +180,7 @@ class _CustomDialogState extends State<CustomDialog> {
           style: TextStyle(color: AppConstants.backgroundColor),
         ),
         TextFormField(
+          style: TextStyle(color: AppConstants.greenColor),
           onChanged: (text) {
             print('4 text field: $text');
           },
@@ -193,6 +201,7 @@ class _CustomDialogState extends State<CustomDialog> {
           style: TextStyle(color: AppConstants.backgroundColor),
         ),
         TextFormField(
+          style: TextStyle(color: AppConstants.greenColor),
           onChanged: (text) {
             print('1 text field: $text');
           },
@@ -205,6 +214,7 @@ class _CustomDialogState extends State<CustomDialog> {
           style: TextStyle(color: AppConstants.backgroundColor),
         ),
         TextFormField(
+          style: TextStyle(color: AppConstants.greenColor),
           onChanged: (text) {
             print('2 text field: $text');
           },
@@ -217,6 +227,7 @@ class _CustomDialogState extends State<CustomDialog> {
           style: TextStyle(color: AppConstants.backgroundColor),
         ),
         TextFormField(
+          style: TextStyle(color: AppConstants.greenColor),
           onChanged: (text) {
             print('3 text field: $text');
           },
@@ -229,6 +240,7 @@ class _CustomDialogState extends State<CustomDialog> {
           style: TextStyle(color: AppConstants.backgroundColor),
         ),
         TextFormField(
+          style: TextStyle(color: AppConstants.greenColor),
           onChanged: (text) {
             print('4 text field: $text');
           },
